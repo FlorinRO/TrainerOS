@@ -10,7 +10,7 @@ type RouteSeoConfig = {
   schemaType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'SoftwareApplication';
 };
 
-const SITE_URL = 'https://traineros.org';
+const SITE_URL = (import.meta.env.VITE_SITE_URL?.trim() || 'https://traineros.org').replace(/\/+$/, '');
 const SITE_NAME = 'TrainerOS';
 const DEFAULT_IMAGE_URL = `${SITE_URL}/logo.jpeg`;
 const DEFAULT_ROBOTS = 'index, follow';
