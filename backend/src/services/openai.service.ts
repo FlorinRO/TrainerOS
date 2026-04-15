@@ -628,7 +628,7 @@ function buildEmergencyDailyIdeaResult(
 
   return {
     ...result,
-    reasoning: `A fost folosit un fallback local de siguranță pentru că răspunsul AI nu a putut fi validat complet. Structura rămâne coerentă și utilă pentru utilizator, iar flow-ul aplicației nu se oprește într-o eroare generică. Asta reduce impactul răspunsurilor incomplete sau al problemelor temporare de provider. Conținutul poate fi înlocuit ulterior de providerul real când răspunsul este valid.`,
+    reasoning: buildDailyIdeaReasoning(format, niche, topic),
   };
 }
 
@@ -686,6 +686,19 @@ function isMultiFormatIdeaResultIncomplete(result: MultiFormatIdeaResult): boole
 function normalizeIdeaSeed(seed: string, fallback: string): string {
   const normalized = seed.replace(/\s+/g, ' ').trim();
   return normalized || fallback;
+}
+
+function buildDailyIdeaReasoning(
+  format: DailyIdeaResult['format'],
+  niche: string,
+  topic: string
+): string {
+  const nicheText = normalizeIdeaSeed(niche, 'nișa ta');
+  const topicText = normalizeIdeaSeed(topic, 'un pas clar și ușor de aplicat');
+  const formatLabel =
+    format === 'REEL' ? 'reel' : format === 'CAROUSEL' ? 'carusel' : 'story';
+
+  return `Ideea funcționează fiindcă pornește de la o fricțiune reală pentru oameni din ${nicheText.toLowerCase()}, apoi o transformă într-un mesaj simplu și clar despre ${topicText.toLowerCase()}. Formatul de ${formatLabel} menține atenția prin pași ușor de urmărit, fără să încarce inutil mesajul. Hook-ul deschide o tensiune recognoscibilă, iar scriptul o mută rapid spre o soluție practică, ceea ce crește retenția și încrederea. CTA-ul continuă firesc conversația și transformă interesul în intenție concretă de răspuns sau DM.`;
 }
 
 function buildMockDailyIdeaResult(
@@ -799,7 +812,7 @@ function buildMockDailyIdeaResult(
     conversionRate: format === 'REEL' ? 44.5 : format === 'CAROUSEL' ? 41.2 : 36.8,
     leadMagnet: `Mini ghid practic pentru ${nicheText.toLowerCase()}, cu pași simpli, exemple concrete și o variantă ușor de aplicat pe tema ${topicText.toLowerCase()}.`,
     dmKeyword,
-    reasoning: `Acest mock păstrează structura reală a produsului și este util pentru test local. Tema este suficient de specifică încât să simuleze un răspuns autentic, dar și destul de clară pentru a verifica UI-ul, parsarea și salvarea rezultatului. Hook-ul este direct, scriptul are progresie logică, iar CTA-ul este orientat spre conversie. Astfel poți valida fixurile fără să depinzi de un provider AI extern.`,
+    reasoning: buildDailyIdeaReasoning(format, nicheText, topicText),
   };
 }
 
