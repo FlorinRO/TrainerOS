@@ -14,5 +14,9 @@ export default defineConfig({
   },
   preview: {
     port: 4174,
+    allowedHosts: [
+      '.up.railway.app',
+      'admin.traineros.org',
+    ],
   },
 });
