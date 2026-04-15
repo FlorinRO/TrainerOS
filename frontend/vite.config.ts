@@ -34,6 +34,7 @@ export default defineConfig({
     allowedHosts: [
       'traineros.org',
       '.traineros.org', // allows subdomains like www.traineros.org
+      '.up.railway.app',
     ],
   },
 });
